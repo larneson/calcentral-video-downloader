@@ -29,7 +29,7 @@ brew install phantomjs
 ### Cookies
 
 Since most youtube class videos are login-restricted, we have to get around this using cookies.
-You will need a method of downloading your cookies into a text file. I recommend [this chrome extension](https://chrome.google.com/webstore/detail/cookiestxt/njabckikapfpffapmjgojcnbfjonfjfg?hl=en). Log in with your calnet id and pull up one of the restricted youtube videos in your browser. Verify that it can play, then click on the cookies.txt plugin and copy the cookies from that page. Paste that into the cookies.txt file in the same directory as your python script. You only need to do this once, and can delete the extension afterward.
+You will need a method of downloading your cookies into a text file. I recommend [this chrome extension](https://chrome.google.com/webstore/detail/cookiestxt/njabckikapfpffapmjgojcnbfjonfjfg?hl=en). Log in with your calnet id and pull up one of the restricted youtube videos in your browser. Verify that it can play, then click on the cookies.txt plugin and copy the cookies from that page. Paste that into the cookies.txt file in the same directory as your python script. Note that now you have to do this every time your CalCentral login cookies expire, which is around 15 minutes or so. I am currently working on a way to fix this so it will do it automatically.
 
 ## Running
 Replace "YOUR USERNAME HERE" and "YOUR PASSWORD HERE" with your CalNet ID and password respectively.
