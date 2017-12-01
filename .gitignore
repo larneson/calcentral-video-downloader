@@ -2,3 +2,4 @@ config.py
 lecture_videos/
 cookies.txt
 __pycache__/
+link_cache

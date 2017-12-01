@@ -95,6 +95,12 @@ with open('cookies.txt', 'w') as f:
     f.write('\n'.join(lines))
 browser.quit()
 
+print("reading youtube links")
+with open('link_cache', 'r') as f:
+    cached = f.read().split('\n')
+    youtube_links = [l for l in youtube_links if l not in cached]
+
+
 #download youtube links
 print("downloading ", youtube_links)
 if not OUTPUT_LOCATION:
@@ -106,3 +112,7 @@ ydl_opts = {
 }
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
     ydl.download(youtube_links)
+
+print("writing completed youtube links")
+with open('link_cache', 'w') as f:
+    f.write('\n'.join(cached + youtube_links))
