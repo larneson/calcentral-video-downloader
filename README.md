@@ -9,16 +9,23 @@ To download this you can clone it from here or download the zip. If you have a m
 This project is in python 3. To download python follow these instructions from the [python website](https://www.python.org/downloads/). Or, since we're at Berkeley, you can read the instructions from [CS 61A](https://cs61a.org/lab/lab00/). (Which will also teach you about command line things if you don't already know.)
 
 ### Dependencies
-This project makes use of several open source python libraries. To run the code you need selenium, BeautifulSoup4 and youtube_dl installed on your system. The easiest way is using pip, which comes with comes with python but you can find more instructions [here](https://pip.pypa.io/en/stable/installing/#upgrading-pip).
-Then in the command line run
+This project makes use of several open source python libraries. To run the code you need selenium, BeautifulSoup4, lxml, and youtube_dl installed on your system. The easiest way is using pip, which comes with comes with python but you can find more instructions [here](https://pip.pypa.io/en/stable/installing/#upgrading-pip).
+
+There is a requriements.txt file with the libraries.To install all the libraries (but not chromedriver), in the calcentral-video-downloader directory run
+```
+pip install -r requirements.txt
+```
+
+Alternatively, in  command line run
 ```
 pip install selenium
 pip install bs4
+pip install lxml
 pip install youtube_dl
 ```
-Or you can read how to do it on their individual websites:
-selenium: http://selenium-python.readthedocs.io/installation.html
-bs4: https://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-beautiful-soup
+Or you can read how to do it on their individual websites:  
+selenium: http://selenium-python.readthedocs.io/installation.html  
+bs4: https://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-beautiful-soup  
 youtube_dl: https://github.com/rg3/youtube-dl
 
 Also, selenium requires a driver to run the web browser. I used Chrome because the cookies got kind of messed up for different ones.
