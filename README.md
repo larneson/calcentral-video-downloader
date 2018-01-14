@@ -58,5 +58,4 @@ Feel free to use this, change it, whatever, just credit me. But please only use 
 - make sure to get links for all classes
 - only download new videos
 - ask for username/password if not in config
-- add folders for different classes
 - add -v options, etc
