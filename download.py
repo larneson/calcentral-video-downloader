@@ -16,6 +16,7 @@ sleep_time = 2
 youtube_links = []
 browser = webdriver.Chrome()
 logged_in = False
+courses = []
 
 while not youtube_links and sleep_time < 20:
     try:
@@ -39,11 +40,12 @@ while not youtube_links and sleep_time < 20:
         soup = BeautifulSoup(html, 'lxml')
         for link in soup.findAll('a'):
             url = link.get('href')
-            if url and '/academics/semester/fall-2017/class/' in url:
+            if url and '/academics/semester/' + SEMESTER + '/class/' in url:
                 courses.append(url)
 
         #find youtube links in class page
         for course in courses:
+            youtube_links.append([])
             print("collecting youtube links for class", course)
             course_url = 'https://calcentral.berkeley.edu' + course
             browser.get(course_url)
@@ -54,8 +56,8 @@ while not youtube_links and sleep_time < 20:
             for link in soup.findAll('a'):
                 url = link.get('href')
                 if url and 'youtube' in url and link not in youtube_links:
-                    youtube_links.append(url)
-        if not youtube_links:
+                    youtube_links[-1].append(url)
+        if not youtube_links or max([len(links) for links in youtube_links]) == 0:
             print("sleeptime too smol")
             sleep_time *= 2
 
@@ -78,7 +80,7 @@ username.send_keys(USERNAME + '@berkeley.edu')
 browser.find_element_by_id("identifierNext").click()
 time.sleep(sleep_time)
 print("getting youtube cookies from browser...")
-browser.get(youtube_links[0])
+browser.get(youtube_links[0][0])
 time.sleep(sleep_time)
 with open('cookies.txt', 'w') as f:
     lines = ['# HTTP Cookie File']
@@ -96,22 +98,32 @@ with open('cookies.txt', 'w') as f:
 browser.quit()
 
 print("reading youtube links")
-with open('link_cache', 'r') as f:
-    cached = f.read().split('\n')
-    youtube_links = [l for l in youtube_links if l not in cached]
+if os.path.exists('link_cache'):
+    with open('link_cache', 'r') as f:
+        cached = f.read().split('\n')
+        for class_links in youtube_links:
+            class_links = [l for l in class_links if l not in cached]
 
 
 #download youtube links
 print("downloading ", youtube_links)
 if not OUTPUT_LOCATION:
     OUTPUT_LOCATION = 'lecture_videos/'
-ydl_opts = {
-    'format': 'mp4',
-    'outtmpl': OUTPUT_LOCATION + '%(title)s.%(ext)s',
-    'cookiefile': 'cookies.txt'
-}
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-    ydl.download(youtube_links)
+
+
+
+
+
+for i, class_links in enumerate(youtube_links):
+    ydl_opts = {
+        'format': 'mp4',
+        'outtmpl': OUTPUT_LOCATION + '/' + courses[i].split("/")[-1] + '/' + '%(title)s.%(ext)s', #gets last line of courses list, which is the class name
+        'cookiefile': 'cookies.txt'
+    }
+    if LIMIT_RATE:
+        ydl_opts['limit-rate'] = LIMIT_RATE
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download(class_links)
 
 print("writing completed youtube links")
 with open('link_cache', 'w') as f:
