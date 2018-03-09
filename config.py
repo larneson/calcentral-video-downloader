@@ -1,5 +1,21 @@
-USERNAME = "YOUR USERNAME HERE"
-PASSWORD = "YOUR PASSWORD HERE"
-OUTPUT_LOCATION = ""
+import datetime
+import getpass
+
+
+USERNAME = "aemartyn"
+PASSWORD = getpass.getpass()
+OUTPUT_LOCATION = "."
 LIMIT_RATE = ""
-SEMESTER = "fall-2017" #i.e fall-2017
+
+def get_semester(day=None):
+	if day is None:
+		day = datetime.date.today()
+	if day.month in range(1, 6):
+		season = "spring"
+	elif day.month in range(6, 8):
+		season = "summer"
+	else:
+		season = "fall"
+	return "{}-{}".format(season, day.year)
+
+SEMESTER = get_semester() #i.e fall-2017
