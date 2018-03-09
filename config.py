@@ -2,7 +2,7 @@ import datetime
 import getpass
 
 
-USERNAME = "aemartyn"
+USERNAME = "YOUR USERNAME HERE"
 PASSWORD = getpass.getpass()
 OUTPUT_LOCATION = "."
 LIMIT_RATE = ""
