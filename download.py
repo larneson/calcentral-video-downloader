@@ -3,8 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import youtube_dl
-from bs4 import BeautifulSoup
-#import argparse
+from lxml import html as lxml
 import os
 import selenium.common.exceptions
 from config import *
@@ -37,8 +36,7 @@ while not youtube_links and sleep_time < 20:
 
         html = browser.page_source
         courses = []
-        soup = BeautifulSoup(html, 'lxml')
-        for link in soup.findAll('a'):
+        for link in lxml.fromstring(html).iter('a'):
             url = link.get('href')
             if url and '/academics/semester/' + SEMESTER + '/class/' in url:
                 courses.append(url)
@@ -52,8 +50,7 @@ while not youtube_links and sleep_time < 20:
             time.sleep(sleep_time)
 
             html = browser.page_source
-            soup = BeautifulSoup(html, 'lxml')
-            for link in soup.findAll('a'):
+            for link in lxml.fromstring(html).iter('a'):
                 url = link.get('href')
                 if url and 'youtube' in url and link not in youtube_links:
                     youtube_links[-1].append(url)
